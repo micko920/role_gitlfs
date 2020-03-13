@@ -1,0 +1,27 @@
+---
+- name: Ensure requirements are installed
+  apt:
+    name:
+      - debian-archive-keyring
+      - apt-transport-https
+    state: latest
+
+- name: Add an Apt signing key
+  apt_key:
+    url: https://packagecloud.io/github/git-lfs/gpgkey
+    state: present
+
+- name: Ensure repository configuration
+  apt_repository:
+    repo: "{{ item }}"
+    state: present
+    filename: github_git-lfs.list
+    update_cache: true
+  with_items:
+    - "deb https://packagecloud.io/github/git-lfs/{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} main"
+    - "deb-src https://packagecloud.io/github/git-lfs/{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} main"
+
+- name: Ensure github git-lfs is installed
+  apt:
+    name: git-lfs
+    state: present
