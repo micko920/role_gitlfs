@@ -4,6 +4,7 @@
     name:
       - debian-archive-keyring
       - apt-transport-https
+      - gnupg
     state: latest
 
 - name: Add an Apt signing key
