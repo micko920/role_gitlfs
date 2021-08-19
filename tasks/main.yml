@@ -2,9 +2,11 @@
 - name: Ensure requirements are installed
   apt:
     name:
+      - debian-keyring
       - debian-archive-keyring
       - apt-transport-https
-      - gnupg
+      - gnupg2
+      - curl
     state: latest
 
 - name: Add an Apt signing key
